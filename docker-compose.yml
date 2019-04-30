@@ -30,13 +30,15 @@ services:
   nginx:
     container_name: tardis_bank_nginx
     image: tardisbank/nginx
-    ports:
-      - "80:80"
+    environment:
+      - VIRTUAL_HOST=tardisbank.local
     volumes:
       - static-content:/usr/share/nginx/html
     depends_on:
       - api
       - client
+    ports:
+      - "80:80"
 
   client:
     container_name: tardis_bank_static
@@ -51,5 +53,8 @@ services:
     image: namshi/smtp
     expose:
       - "25"
+    ports:
+      - "25:25"
+
 volumes:
   static-content:
